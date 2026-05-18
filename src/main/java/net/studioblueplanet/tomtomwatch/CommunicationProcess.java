@@ -1313,16 +1313,17 @@ public class CommunicationProcess implements ProgressListener
         synchronized(this)
         {
             deviceName=watchInterface.getPreference("watchName");
-            
-            if (deviceName!=null)
+
+            // A missing <watchName> tag (factory-default watch, never named)
+            // is not a USB error and must not trigger toErrorState() — that
+            // would disconnect mid-sequence while GETFIRMWAREVERSION and
+            // GETPRODUCTID are still queued, cascading the connection down.
+            if (deviceName==null)
             {
-                theView.setDeviceName(deviceName);
+                deviceName="Unknown";
             }
-            else
-            {
-                toErrorState();
-            }
-        }        
+            theView.setDeviceName(deviceName);
+        }
     }
     
     

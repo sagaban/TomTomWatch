@@ -4,7 +4,7 @@
 # can't load it, so we invoke an x86_64 JDK under Rosetta.
 
 set -e
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/target"
 
 JAVA_X64="$HOME/.java-x64/jdk-21.0.11+10/Contents/Home/bin/java"
 if [ ! -x "$JAVA_X64" ]; then
@@ -16,4 +16,4 @@ if [ ! -x "$JAVA_X64" ]; then
     exit 1
 fi
 
-exec arch -x86_64 "$JAVA_X64" -jar target/TomTomWatch.jar "$@"
+exec arch -x86_64 "$JAVA_X64" -jar TomTomWatch.jar "$@"
